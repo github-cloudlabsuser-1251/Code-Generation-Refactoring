@@ -1,37 +1,43 @@
-#A poorly written example of a program in Python. It prompts the user for the number of elements to sum, takes those integers as input, and handles some basic error cases
+# A poorly written example of a program in Python. It prompts the user for the number of elements to sum, takes those integers as input, and handles some basic error cases
 
-MAX = 100
+MAX_ELEMENTS = 100
 
-def calculate_sum(arr):
-   result = 0
-   for num in arr:
-      result += num
-   return result
+def calculate_sum(numbers):
+    """Returns the sum of a list of numbers."""
+    return sum(numbers)
+
+def get_number_of_elements():
+    """Prompts the user for the number of elements and validates the input."""
+    while True:
+        try:
+            n = int(input(f"Enter the number of elements (1-{MAX_ELEMENTS}): "))
+            if 1 <= n <= MAX_ELEMENTS:
+                return n
+            else:
+                print(f"Please enter a number between 1 and {MAX_ELEMENTS}.")
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+
+def get_elements(n):
+    """Prompts the user to enter n integers and returns them as a list."""
+    numbers = []
+    print(f"Enter {n} integers:")
+    while len(numbers) < n:
+        try:
+            num = int(input(f"Element {len(numbers)+1}: "))
+            numbers.append(num)
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+    return numbers
 
 def main():
-   try:
-      n = int(input("Enter the number of elements (1-100): "))
-      if not 1 <= n <= MAX:
-            print("Invalid input. Please provide a digit ranging from 1 to 100.")
-            exit(1)
-
-      arr = []
-
-      print(f"Enter {n} integers:")
-      for _ in range(n):
-            try:
-               arr.append(int(input()))
-            except ValueError:
-               print("Invalid input. Please enter valid integers.")
-               exit(1)
-
-      total = calculate_sum(arr)
-
-      print("Sum of the numbers:", total)
-
-   except KeyboardInterrupt:
-      print("\nProgram terminated by user.")
-      exit(1)
+    try:
+        n = get_number_of_elements()
+        numbers = get_elements(n)
+        total = calculate_sum(numbers)
+        print("Sum of the numbers:", total)
+    except KeyboardInterrupt:
+        print("\nProgram terminated by user.")
 
 if __name__ == "__main__":
-   main()
+    main()
